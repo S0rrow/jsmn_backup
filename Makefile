@@ -28,6 +28,12 @@ jsmn_test.o: jsmn_test.c libjsmn.a
 simple_example: example/simple.o libjsmn.a
 	$(CC) $(LDFLAGS) $^ -o $@
 
+myexample: example/myjson.o libjsmn.a
+	$(CC) -c example/myjson.c -o example/myjson.o
+	$(CC) -c jsmn.c -o jsmn.c
+	ar rc libjsmn.a jsmn.o
+	$(CC) example/myjson.o libjsmn.a -o myexample
+
 jsondump: example/jsondump.o libjsmn.a
 	$(CC) $(LDFLAGS) $^ -o $@
 
