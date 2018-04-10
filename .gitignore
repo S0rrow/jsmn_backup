@@ -1,0 +1,5 @@
+example/myjson.o
+example/simple.o
+myexample
+simple_example
+*.o
