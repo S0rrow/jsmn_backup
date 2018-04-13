@@ -47,8 +47,12 @@ int main() {
 			printf("[%d]",i+1);
 #endif
 			/* We may use strndup() to fetch string value */
-			printf("- User: %.*s\n", t[i+1].end-t[i+1].start,
+			printf("- User: %.*s", t[i+1].end-t[i+1].start,
 					JSON_STRING + t[i+1].start);
+#ifdef JSMN_PARENT_LINKS
+			printf(" parent: %d\n", t[i+1].parent);
+#endif
+			printf("\n");
 			i++;
 		} else if (jsoneq(JSON_STRING, &t[i], "admin") == 0) {
 #ifdef DEBUG_MODE
@@ -56,8 +60,12 @@ int main() {
 			printf("[%d]",i+1);
 #endif
 			/* We may additionally check if the value is either "true" or "false" */
-			printf("- Admin: %.*s\n", t[i+1].end-t[i+1].start,
+			printf("- Admin: %.*s", t[i+1].end-t[i+1].start,
 					JSON_STRING + t[i+1].start);
+#ifdef JSMN_PARENT_LINKS
+			printf(" parent: %d\n", t[i+1].parent);
+#endif
+			printf("\n");
 			i++;
 		} else if (jsoneq(JSON_STRING, &t[i], "uid") == 0) {
 	#ifdef DEBUG_MODE
@@ -65,16 +73,24 @@ int main() {
 				printf("[%d]",i+1);
 	#endif
 				/* We may want to do strtol() here to get numeric value */
-			printf("- UID: %.*s\n", t[i+1].end-t[i+1].start,
+			printf("- UID: %.*s", t[i+1].end-t[i+1].start,
 					JSON_STRING + t[i+1].start);
 			i++;
+#ifdef JSMN_PARENT_LINKS
+			printf(" parent: %d\n",t[i+1].parent);
+#endif
+			printf("\n");
 		} else if (jsoneq(JSON_STRING, &t[i], "groups") == 0) {
 			int j;
 
 #ifdef DEBUG_MODE
 			printf("%d %d\n", t[i+1].start, t[i+1].end);
 #endif
-			printf("- Groups:\n");
+			printf("- Groups:");
+#ifdef JSMN_PARENT_LINKS
+			printf(" parent: %d\n",t[i+1].parent);
+#endif
+			printf("\n");
 			if (t[i+1].type != JSMN_ARRAY) {
 				continue; /* We expect groups to be an array of strings */
 			}
@@ -83,7 +99,11 @@ int main() {
 #ifdef DEBUG_MODE
 				printf("[%d]",i+j+2);
 #endif
-				printf("  * %.*s\n", g->end - g->start, JSON_STRING + g->start);
+				printf("  * %.*s", g->end - g->start, JSON_STRING + g->start);
+#ifdef JSMN_PARENT_LINKS
+				printf(" parent: %d\n",t[i+j+2].parent);
+#endif
+				printf("\n");
 			}
 			i += t[i+1].size + 1;
 		} else {
