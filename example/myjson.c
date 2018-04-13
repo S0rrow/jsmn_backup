@@ -51,8 +51,9 @@ int main() {
 					JSON_STRING + t[i+1].start);
 #ifdef JSMN_PARENT_LINKS
 			printf(" parent: %d\n", t[i+1].parent);
-#endif
+#else 
 			printf("\n");
+#endif
 			i++;
 		} else if (jsoneq(JSON_STRING, &t[i], "admin") == 0) {
 #ifdef DEBUG_MODE
@@ -64,8 +65,9 @@ int main() {
 					JSON_STRING + t[i+1].start);
 #ifdef JSMN_PARENT_LINKS
 			printf(" parent: %d\n", t[i+1].parent);
-#endif
+#else
 			printf("\n");
+#endif
 			i++;
 		} else if (jsoneq(JSON_STRING, &t[i], "uid") == 0) {
 	#ifdef DEBUG_MODE
@@ -78,8 +80,9 @@ int main() {
 			i++;
 #ifdef JSMN_PARENT_LINKS
 			printf(" parent: %d\n",t[i+1].parent);
-#endif
+#else
 			printf("\n");
+#endif
 		} else if (jsoneq(JSON_STRING, &t[i], "groups") == 0) {
 			int j;
 
@@ -89,8 +92,9 @@ int main() {
 			printf("- Groups:");
 #ifdef JSMN_PARENT_LINKS
 			printf(" parent: %d\n",t[i+1].parent);
-#endif
+#else
 			printf("\n");
+#endif
 			if (t[i+1].type != JSMN_ARRAY) {
 				continue; /* We expect groups to be an array of strings */
 			}
@@ -102,8 +106,9 @@ int main() {
 				printf("  * %.*s", g->end - g->start, JSON_STRING + g->start);
 #ifdef JSMN_PARENT_LINKS
 				printf(" parent: %d\n",t[i+j+2].parent);
-#endif
+#else
 				printf("\n");
+#endif
 			}
 			i += t[i+1].size + 1;
 		} else {
